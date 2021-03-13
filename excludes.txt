@@ -1,2 +1,8 @@
-sonarr/MediaCover/*
-radarr/MediaCover/*
+*.jpg
+*.jpeg
+*.gif
+*.png
+sonarr/MediaCover
+radarr/MediaCover
+*cache
+

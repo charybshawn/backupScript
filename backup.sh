@@ -1,29 +1,28 @@
 #!/bin/bash
 
-##
-# Backup to MergerFS pool
-##
-
 # Folders to backup
-backup_dir = "$PWD/.config/"
+backup_dir="/home/thor/.config"
 
 # Destination Directories
 dest_dir="/mnt/storage/backups"
 
 # Create archive filename.
-day=$(date +%A)
+timestamp=$(date +"%Y%m%d"
 hostname=$(hostname -s)
-archive_file="$hostname-mediaServer-$day.tgz"
+archive_file="mediaServer-$hostname-$timestamp.tgz"
 
 # Print start status message.
 echo "Backing up $backup_dir to $dest_dir/$archive_file"
-date
 echo
 
 # Backup the files using tar.
-rsync -avzh --exclude-from="excludes.txt" backup_dirs/ dest_dir/
+rsync -av --exclude={'exclude.txt'} $backup_dir "$dest_dir/tmp"
+#tar -czf  $dest_dir/$archive_file $dest_dir/tmp
 
 # Print end status message.
 echo
 echo "Backup complete."
 date
+
+# Long listing of files in $dest to check file sizes.
+ls -lh $dest_dir
