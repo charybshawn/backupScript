@@ -5,9 +5,7 @@
 ##
 
 # Folders to backup
-base_dir = "$PWD/.config/"
-backup_dirs="sonarr/Backups radarr/Backups /nzbget"
-excludes="$base_dir/sonarr/MediaCover $base_dir/radarr/MediaCover"
+backup_dir = "$PWD/.config/"
 
 # Destination Directories
 dest_dir="/mnt/storage/backups"
@@ -18,12 +16,12 @@ hostname=$(hostname -s)
 archive_file="$hostname-mediaServer-$day.tgz"
 
 # Print start status message.
-echo "Backing up $backup_dirs to $dest_dir/$archive_file"
+echo "Backing up $backup_dir to $dest_dir/$archive_file"
 date
 echo
 
 # Backup the files using tar.
-rsync -avzh --exclude-from='excludes.txt' backup_dirs/ dest_dir/
+rsync -avzh --exclude-from="excludes.txt" backup_dirs/ dest_dir/
 
 # Print end status message.
 echo
