@@ -7,7 +7,7 @@ backup_dir="/home/thor/.config"
 dest_dir="/mnt/storage/backups"
 
 # Create archive filename.
-timestamp=$(date +"%Y%m%d"
+timestamp=$(date +"%Y%m%d")
 hostname=$(hostname -s)
 archive_file="mediaServer-$hostname-$timestamp.tgz"
 
