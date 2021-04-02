@@ -2,29 +2,36 @@
 
 # Folders to backup
 backup_dir=/home/thor/.config/
-
 # Destination Directories
-dest_dir=/mnt/storage/backups
+dest_dir=/data/backups/$HOSTNAME
+
+#Create destination directory if it does not exist.
+mkdir -p $backup_dir/$HOSTNAME
 
 # Create archive filename.
 timestamp=$(date +"%Y%m%d")
-hostname=$(hostname -s)
-archive_file=mediaServer"_"$hostname"_"$timestamp.tgz
+archive_file=mediaServer"__"$timestamp.tgz
 
 # Print start status message.
-echo "Backing up $backup_dir to $dest_dir/$archive_file"
+echo "Backing up the contents of: $backup_dir and archiving to $dest_dir/$archive_file"
 echo
 
+# Close all docker containers while we complete the backup
+docker kill $(docker ps -q)
+
 # Create TMP dir
-mkdir $dest_dir/tmp_$timestamp
+mkdir -p $dest_dir/tmp_$timestamp
 
 # Backup the files using tar.
 rsync -ra --exclude-from="excludes.txt" $backup_dir "$dest_dir/tmp_$timestamp"
-tar -cf  $dest_dir/$archive_file $dest_dir/tmp_$timestamp
+tar -czf  $dest_dir/$archive_file $dest_dir/tmp_$timestamp
+
+# Restart all docker containers
+docker start $(docker ps -a -q)
 
 # Cleanup and remove old tmp directory
 rm -R $dest_dir/tmp_$timestamp
 
 # Print end status message.
 echo
-echo "Backup complete. Removed tmp directory."
+echo "Backup completed."
