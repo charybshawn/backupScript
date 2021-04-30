@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Bash Script Directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # Folders to backup
 backup_dir=/home/thor/.config/
 # Destination Directories
@@ -23,7 +26,7 @@ echo
 mkdir -p $dest_dir/tmp_$timestamp
 
 # Backup the files using tar.
-rsync -ra --no-o --no-g --no-perms --exclude-from="excludes.txt" $backup_dir "$dest_dir/tmp_$timestamp"
+rsync -ra --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir "$dest_dir/tmp_$timestamp"
 tar -czf  $dest_dir/$archive_file $dest_dir/tmp_$timestamp
 
 # Restart all docker containers
