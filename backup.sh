@@ -29,7 +29,7 @@ echo "Pulling in all the files and prepping for compression.."
 rsync --info=progress2 -ra --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir "$dest_dir/tmp_$timestamp"
 echo
 echo "Compressing and moving files.."
-tar -czf --totals=USR1 $dest_dir/$archive_file $dest_dir/tmp_$timestamp
+tar -czf --totals=SIGUSR1 --verbose $dest_dir/$archive_file $dest_dir/tmp_$timestamp
 
 # Restart all docker containers
 docker start $(docker ps -a -q)
