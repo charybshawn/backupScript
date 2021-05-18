@@ -28,7 +28,7 @@ echo
 
 printf "Shutting down all docker containers.."
 # Close all docker containers while we complete the backup
-docker kill $(docker ps -q) >/dev/null
+docker kill $(docker ps -q)
 printf " ${GREEN}DONE${NC}"
 
 # Create TMP dir
