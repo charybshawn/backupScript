@@ -2,11 +2,9 @@
 
 #Bash Script Directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-GREEN='0;32'
-NC='\033[0m' # No Color
 
 # Folders to backup
-backup_dir=/home/thor/.config/
+backup_dir=/home
 # Destination Directories
 dest_dir=/data/backups
 # Temporary Directory
@@ -20,7 +18,7 @@ mkdir -p $dest_dir/$HOSTNAME
 
 # Create archive filename.
 timestamp=$(date +"%Y%m%d")
-archive_file=mediaServer"_"$timestamp.tgz
+archive_file="$timestamp-$HOSTNAME.tgz"
 
 # Print start status message.
 echo "Backing up the contents of: $backup_dir and archiving to $dest_dir/$archive_file"
@@ -29,7 +27,6 @@ echo
 printf "Shutting down all docker containers.."
 # Close all docker containers while we complete the backup
 docker kill $(docker ps -q)
-printf " ${GREEN}DONE${NC}"
 
 # Create TMP dir
 mkdir -p $temp_dir
@@ -41,7 +38,7 @@ echo
 
 echo "Compressing and moving files.."
 #tar -czf --totals=SIGUSR1 --verbose  $dest_dir/tmp_$timestamp
-tar czf - $temp_dir | pv -s $(du -sb $dest_dir/$archive_file | awk '{print $1}') | gzip > $archive_file
+tar -zcvf $dest_dir/$archive_file $temp_dir
 
 
 echo "Restarting all docker containers.."
