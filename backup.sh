@@ -37,8 +37,7 @@ rsync --info=progress2 -ra --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/
 echo
 
 echo "Compressing and moving files.."
-#tar -czf --totals=SIGUSR1 --verbose  $dest_dir/tmp_$timestamp
-tar -zcvf $dest_dir/$archive_file $temp_dir
+tar -zcvf $dest_dir/$HOSTNAME/$archive_file $temp_dir
 
 
 echo "Restarting all docker containers.."
