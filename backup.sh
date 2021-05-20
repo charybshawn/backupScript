@@ -54,4 +54,4 @@ rm -R $temp_dir
 
 # Print end status message.
 echo
-echo "Backup completed in: $((($(date +%s)-$start)/60))"
+echo "Backup completed in: $((($(date +%s)-$start)/60)) mins."
