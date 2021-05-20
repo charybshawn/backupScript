@@ -4,5 +4,5 @@
 *.png
 sonarr/MediaCover
 radarr/MediaCover
-*cache
+Cache*
 
