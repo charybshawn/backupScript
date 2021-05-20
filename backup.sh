@@ -11,10 +11,11 @@ dest_dir=/data/backups
 temp_dir=$dest_dir/tmp
 
 #Remove all prexisting tmp directories
-rm -R $dest_dir/tmp/*
+rm -R $dest_dir/tmp
 
 #Create destination directory if it does not exist.
 mkdir -p $dest_dir/$HOSTNAME
+mkdir -p $temp_dir
 
 # Create archive filename.
 timestamp=$(date +"%Y%m%d")
@@ -45,7 +46,7 @@ echo "Restarting all docker containers.."
 docker start $(docker ps -a -q)
 
 # Cleanup and remove old tmp directory
-rm -R $temp_dir/*
+rm -R $temp_dir
 
 # Print end status message.
 echo
