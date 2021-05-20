@@ -7,7 +7,7 @@ start=`date +%s`
 # Folders to backup
 backup_dir=/home
 # Destination Directories
-dest_dir=/data/backups
+dest_dir=/data/backups/$HOSTNAME
 # Temporary Directory
 temp_dir=$dest_dir/tmp
 
@@ -15,7 +15,7 @@ temp_dir=$dest_dir/tmp
 rm -R $dest_dir/tmp
 
 #Create destination directory if it does not exist.
-mkdir -p $dest_dir/$HOSTNAME
+mkdir -p $dest_dir
 mkdir -p $temp_dir
 
 # Create archive filename.
@@ -41,7 +41,7 @@ printf "complete\n"
 
 echo "Compressing and moving files.."
 printf "TAR working.."
-tar -zcf $dest_dir/$HOSTNAME/$archive_file $temp_dir &>/dev/null
+tar -zcf $dest_dir/$archive_file $temp_dir &>/dev/null
 printf "complete\n"
 echo 
 
