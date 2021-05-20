@@ -29,6 +29,7 @@ echo
 echo "Shutting down all docker containers.."
 # Close all docker containers while we complete the backup
 docker kill $(docker ps -q) &>/dev/null
+echo
 
 # Create TMP dir
 mkdir -p $temp_dir
@@ -37,21 +38,24 @@ mkdir -p $temp_dir
 echo "Pulling in all the files and prepping archive.."
 printf "RSYNC working.."
 rsync -aq --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
-printf "complete\n"
+printf "done\n"
+echo
 
 echo "Compressing and moving files.."
 printf "TAR working.."
 tar -zcf $dest_dir/$archive_file $temp_dir &>/dev/null
-printf "complete\n"
+printf "done\n"
 echo 
 
-echo "Restarting all docker containers.."
+printf "Restarting all docker containers.."
 # Restart all docker containers
-docker start $(docker ps -a -q)
+docker start $(docker ps -a -q) &>/dev/null
+printf "done\n"
 
+echo "Cleaning up"
 # Cleanup and remove old tmp directory
 rm -R $temp_dir
 
 # Print end status message.
 echo
-echo "Backup completed in: $((($(date +%s)-$start)/60)) mins."
+echo "Backup was completed in: $((($(date +%s)-$start)/60)) mins."
