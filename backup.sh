@@ -34,7 +34,7 @@ mkdir -p $temp_dir
 
 # Backup the files using tar.
 echo "Pulling in all the files and prepping archive.."
-rsync --info=progress2 -ra --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
+rsync -aPv --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
 echo
 
 echo "Compressing and moving files.."
