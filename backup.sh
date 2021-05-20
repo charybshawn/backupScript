@@ -27,19 +27,22 @@ echo
 
 printf "Shutting down all docker containers.."
 # Close all docker containers while we complete the backup
-docker kill $(docker ps -q)
+docker kill $(docker ps -q) &>/dev/null
 
 # Create TMP dir
 mkdir -p $temp_dir
 
 # Backup the files using tar.
 echo "Pulling in all the files and prepping archive.."
+echo "RSYNC working.."
 rsync -aq --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
-echo
+printf "complete"
 
 echo "Compressing and moving files.."
-tar -zcf $dest_dir/$HOSTNAME/$archive_file $temp_dir
-
+echo "TAR working.."
+tar -zcf $dest_dir/$HOSTNAME/$archive_file $temp_dir &>/dev/null
+printf "complete"
+echo ""
 
 echo "Restarting all docker containers.."
 # Restart all docker containers
