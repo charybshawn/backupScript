@@ -5,4 +5,5 @@
 sonarr/MediaCover
 radarr/MediaCover
 Cache*
+cache*
 
