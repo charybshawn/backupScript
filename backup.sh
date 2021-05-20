@@ -12,7 +12,7 @@ dest_dir=/data/backups/$HOSTNAME
 temp_dir=$dest_dir/tmp
 
 #Remove all prexisting tmp directories
-rm -R $dest_dir/tmp
+rm -Rf $dest_dir/tmp/*
 
 #Create destination directory if it does not exist.
 mkdir -p $dest_dir
