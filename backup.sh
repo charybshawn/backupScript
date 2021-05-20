@@ -3,6 +3,7 @@
 #Bash Script Directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+start=`date +%s`
 # Folders to backup
 backup_dir=/home
 # Destination Directories
@@ -25,7 +26,7 @@ archive_file="$timestamp-$HOSTNAME.tgz"
 echo "Backing up the contents of: $backup_dir and archiving to $dest_dir/$archive_file"
 echo
 
-printf "Shutting down all docker containers.."
+echo "Shutting down all docker containers.."
 # Close all docker containers while we complete the backup
 docker kill $(docker ps -q) &>/dev/null
 
@@ -34,15 +35,15 @@ mkdir -p $temp_dir
 
 # Backup the files using tar.
 echo "Pulling in all the files and prepping archive.."
-echo "RSYNC working.."
+printf "RSYNC working.."
 rsync -aq --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
-printf "complete"
+printf "complete/n"
 
-echo "Compressing and moving files.."
-echo "TAR working.."
+printf "Compressing and moving files.."
+printf "TAR working.."
 tar -zcf $dest_dir/$HOSTNAME/$archive_file $temp_dir &>/dev/null
-printf "complete"
-echo ""
+printf "complete/n"
+echo 
 
 echo "Restarting all docker containers.."
 # Restart all docker containers
@@ -53,4 +54,4 @@ rm -R $temp_dir
 
 # Print end status message.
 echo
-echo "Backup completed."
+echo "Backup completed in: $((($(date +%s)-$start)/60))
