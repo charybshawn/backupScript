@@ -34,11 +34,11 @@ mkdir -p $temp_dir
 
 # Backup the files using tar.
 echo "Pulling in all the files and prepping archive.."
-rsync -aPv --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
+rsync -aq --no-o --no-g --no-perms --exclude-from="$SCRIPT_DIR/excludes.txt" $backup_dir $temp_dir
 echo
 
 echo "Compressing and moving files.."
-tar -zcvf $dest_dir/$HOSTNAME/$archive_file $temp_dir
+tar -zcf $dest_dir/$HOSTNAME/$archive_file $temp_dir
 
 
 echo "Restarting all docker containers.."
