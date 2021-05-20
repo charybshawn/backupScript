@@ -4,8 +4,8 @@
 *.png
 sonarr/MediaCover
 radarr/MediaCover
-Cache*
-cache*
+*Cache*
+*cache*
 Plex Media Server/Media*
-.cache*
+Plex Media Server/Metadata*
 
