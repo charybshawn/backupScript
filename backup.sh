@@ -11,6 +11,8 @@ dest_dir=/data/backups/$HOSTNAME
 # Temporary Directory
 temp_dir=$dest_dir/tmp
 
+clear
+
 #Remove all prexisting tmp directories
 rm -Rf $dest_dir/tmp/*
 
