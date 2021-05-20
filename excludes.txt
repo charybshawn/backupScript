@@ -7,4 +7,5 @@ radarr/MediaCover
 Cache*
 cache*
 Plex Media Server/Media*
+.cache*
 
